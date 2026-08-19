@@ -353,3 +353,37 @@ if st.sidebar.button("💾 DB에 제품명 추가하기"):
                 f"✅ [{brand_key}] {prod_name} 등록이 완료되었습니다!"
             )
             st.rerun()
+if st.sidebar.button("💾 DB에 제품명 추가하기"):
+    if not selected_brand or not new_product_name:
+        st.sidebar.warning("⚠️ 브랜드명과 제품명을 모두 입력해 주세요.")
+    else:
+        brand_key = selected_brand.strip().upper()
+        prod_name = new_product_name.strip()
+
+        # 전체 DB 내 중복 여부 확인 (대소문자/공백 무시 정확 검사)
+        all_products_lower = {
+            item.strip().lower(): b_name
+            for b_name, items in db_dict.items()
+            for item in items
+        }
+
+        # ❌ 1) 이미 등록되어 있는 경우 -> ERROR 팝업 출력
+        if prod_name.lower() in all_products_lower:
+            existing_brand = all_products_lower[prod_name.lower()]
+            st.sidebar.error(
+                f"🚨 등록 불가: 이미 [{existing_brand}] 브랜드에 등록되어 있는 제품명입니다!"
+            )
+
+        # ✅ 2) 중복이 없는 경우 -> 정상 등록 진행
+        else:
+            if brand_key not in db_dict:
+                db_dict[brand_key] = []
+
+            db_dict[brand_key].append(prod_name)
+            save_db(db_dict)  # 파일 저장
+            st.session_state["OFFICIAL_DB"] = db_dict
+
+            st.sidebar.success(
+                f"✅ [{brand_key}] {prod_name}\n\n등록이 완료되었습니다!"
+            )
+            st.rerun()
