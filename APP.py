@@ -290,16 +290,18 @@ DEFAULT_DB = {
     "K-SECRET" :[
 "K-SECRET SEOUL 1988 SERUM  RETINAL LIPOSOME 2% + BLACK GINSENG",
         # ...
-    ].
+    ],
     "UNPA" :[
 
         "unpa Bubi Bubi Bubble Lip Scrub",
         # ...
-    ]
+    ],
+
+    
     "BRAYE" :[
 
         
-    ]
+    ],
 
 }
 
