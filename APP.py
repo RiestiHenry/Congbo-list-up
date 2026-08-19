@@ -287,6 +287,15 @@ DEFAULT_DB = {
         "TIRTIR MASK FIT RED CUSHION 21N IVORY",
         # ...
     ],
+    "K-SECRET" :[
+"K-SECRET SEOUL 1988 SERUM  RETINAL LIPOSOME 2% + BLACK GINSENG",
+        # ...
+    ].
+    "UPNA" :[
+
+        "unpa Bubi Bubi Bubble Lip Scrub",
+        # ...
+    ]
 }
 
 
