@@ -230,7 +230,7 @@ st.write(
 st.markdown("---")
 st.subheader("📄 표준 인보이스 양식 다운로드")
 
-TEMPLATE_FILE_PATH = "RIESTI Global Invoice 2608 - for Co.xlsx"
+TEMPLATE_FILE_PATH = "RIESTI Global Invoice sample.xlsx"
 if not os.path.exists(TEMPLATE_FILE_PATH):
     TEMPLATE_FILE_PATH = "RIESTI Global sample.xlsx"
 
