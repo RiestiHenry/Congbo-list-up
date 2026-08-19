@@ -274,3 +274,82 @@ if os.path.exists(TEMPLATE_FILE_PATH):
 else:
     st.info("💡 등록된 표준 인보이스 양식 파일이 없습니다.")
 
+DB_FILE = "official_db.json"
+
+DEFAULT_DB = {
+    "KLAVUU": [
+        "KLAVUU VEGAN ZINC SUNCREAM SPF50+PA++++",
+        "KLAVUU Real Vegan Collagen Ampoule",
+        "KLAVUU Real Vegan Collagen Cream",
+        # ... (기존 DB 항목들)
+    ],
+    "TIRTIR": [
+        "TIRTIR MASK FIT RED CUSHION 21N IVORY",
+        # ...
+    ],
+}
+
+
+def load_db():
+    """저장된 JSON 파일이 있으면 불러오고, 없으면 기본 DB 사용"""
+    if os.path.exists(DB_FILE):
+        with open(DB_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return DEFAULT_DB
+
+
+def save_db(db_data):
+    """DB 변경사항을 JSON 파일로 저장"""
+    with open(DB_FILE, "w", encoding="utf-8") as f:
+        json.dump(db_data, f, ensure_ascii=False, indent=4)
+
+
+# 세션 상태에 DB 저장
+if "OFFICIAL_DB" not in st.session_state:
+    st.session_state["OFFICIAL_DB"] = load_db()
+
+# ---------------------------------------------------------
+# ➕ [사이드바] 신규 제품명/브랜드 DB 추가 기능
+# ---------------------------------------------------------
+st.sidebar.markdown("---")
+st.sidebar.header("➕ 공표확인서 정식 DB 추가")
+
+db_dict = st.session_state["OFFICIAL_DB"]
+
+# 1. 브랜드 선택 또는 직접 입력
+brand_option = st.sidebar.radio(
+    "브랜드 선택 방식", ["기존 브랜드 선택", "새 브랜드 직접 입력"]
+)
+
+if brand_option == "기존 브랜드 선택":
+    selected_brand = st.sidebar.selectbox("브랜드 선택", list(db_dict.keys()))
+else:
+    selected_brand = st.sidebar.text_input("새 브랜드명 입력 (예: BRAYE)")
+
+# 2. 정식 제품명 입력
+new_product_name = st.sidebar.text_input(
+    "추가할 정식 제품명 입력",
+    placeholder="예: KLAVUU GREEN PEARLSATION TEATREE SPOT",
+)
+
+# 3. DB 추가 버튼
+if st.sidebar.button("💾 DB에 제품명 추가하기"):
+    if not selected_brand or not new_product_name:
+        st.sidebar.warning("⚠️ 브랜드명과 제품명을 모두 입력해 주세요.")
+    else:
+        brand_key = selected_brand.strip().upper()
+        prod_name = new_product_name.strip()
+
+        if brand_key not in db_dict:
+            db_dict[brand_key] = []
+
+        if prod_name in db_dict[brand_key]:
+            st.sidebar.info("💡 이미 DB에 등록되어 있는 제품명입니다.")
+        else:
+            db_dict[brand_key].append(prod_name)
+            save_db(db_dict)  # 파일 저장
+            st.session_state["OFFICIAL_DB"] = db_dict
+            st.sidebar.success(
+                f"✅ [{brand_key}] {prod_name} 등록이 완료되었습니다!"
+            )
+            st.rerun()
