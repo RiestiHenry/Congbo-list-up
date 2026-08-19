@@ -260,7 +260,7 @@ if uploaded_file is not None:
     except Exception as e:
         st.error(f"파일을 읽는 중 오류가 발생했습니다: {e}")
         
-TEMPLATE_FILE_PATH = "RIESTI Global sample.xlsx"
+TEMPLATE_FILE_PATH = "RIESTI Global Invoice sample.xlsx"
 
 if os.path.exists(TEMPLATE_FILE_PATH):
     with open(TEMPLATE_FILE_PATH, "rb") as file:
