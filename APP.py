@@ -332,27 +332,7 @@ new_product_name = st.sidebar.text_input(
     placeholder="예: KLAVUU GREEN PEARLSATION TEATREE SPOT",
 )
 
-# 3. DB 추가 버튼
-if st.sidebar.button("💾 DB에 제품명 추가하기"):
-    if not selected_brand or not new_product_name:
-        st.sidebar.warning("⚠️ 브랜드명과 제품명을 모두 입력해 주세요.")
-    else:
-        brand_key = selected_brand.strip().upper()
-        prod_name = new_product_name.strip()
 
-        if brand_key not in db_dict:
-            db_dict[brand_key] = []
-
-        if prod_name in db_dict[brand_key]:
-            st.sidebar.info("💡 이미 DB에 등록되어 있는 제품명입니다.")
-        else:
-            db_dict[brand_key].append(prod_name)
-            save_db(db_dict)  # 파일 저장
-            st.session_state["OFFICIAL_DB"] = db_dict
-            st.sidebar.success(
-                f"✅ [{brand_key}] {prod_name} 등록이 완료되었습니다!"
-            )
-            st.rerun()
 if st.sidebar.button("💾 DB에 제품명 추가하기"):
     if not selected_brand or not new_product_name:
         st.sidebar.warning("⚠️ 브랜드명과 제품명을 모두 입력해 주세요.")
