@@ -173,7 +173,7 @@ for brand, items in list(db_dict.items()):
     )
 
 st.sidebar.markdown("---")
-st.sidebar.header("➕ 공표확인서 정식 DB 추가")
+st.sidebar.header("➕ 공표확인서 정식 DB 추가 (미구현)")
 
 brand_option = st.sidebar.radio(
     "브랜드 선택 방식", ["기존 브랜드 선택", "새 브랜드 직접 입력"]
