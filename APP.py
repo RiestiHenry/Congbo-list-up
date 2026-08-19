@@ -383,3 +383,28 @@ if st.sidebar.button("💾 DB에 제품명 추가하기"):
                 f"✅ [{brand_key}] {prod_name}\n\n등록이 완료되었습니다!"
             )
             st.rerun()
+
+st.sidebar.header("📚 등록된 브랜드 DB 현황")
+st.sidebar.caption("브랜드별 버튼을 누르면 정식 제품명 목록(.txt)을 다운로드합니다.")
+
+db_dict = st.session_state["OFFICIAL_DB"]
+
+for brand, items in db_dict.items():
+    col_text, col_btn = st.sidebar.columns([3, 2])
+    
+    # 1. 브랜드명 및 SKU 수 표시
+    col_text.markdown(f"**{brand}** (`{len(items)}개`) ")
+    
+    # 2. TXT 파일 내용 생성 (줄바꿈 구분)
+    txt_content = "\n".join(items)
+    
+    # 3. 브랜드별 TXT 다운로드 버튼
+    col_btn.download_button(
+        label="📄 TXT",
+        data=txt_content,
+        file_name=f"{brand}_공표확인서_정식제품명 목록.txt",
+        mime="text/plain",
+        key=f"download_{brand}"  # 고유 키 지정
+    )
+
+st.sidebar.markdown("---")
