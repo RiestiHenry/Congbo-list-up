@@ -2,6 +2,7 @@ import io
 import re
 import pandas as pd
 import streamlit as st
+import os
 
 # 페이지 기본 설정
 st.set_page_config(
