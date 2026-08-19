@@ -259,3 +259,17 @@ if uploaded_file is not None:
 
     except Exception as e:
         st.error(f"파일을 읽는 중 오류가 발생했습니다: {e}")
+        
+TEMPLATE_FILE_PATH = "RIESTI Global Invoice 2608 - for Co.xlsx"
+
+if os.path.exists(TEMPLATE_FILE_PATH):
+    with open(TEMPLATE_FILE_PATH, "rb") as file:
+        st.download_button(
+            label="📥 RIESTI 표준 인보이스 양식 다운로드 (.xlsx)",
+            data=file,
+            file_name="RIESTI Global Invoice Standard Form.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+else:
+    st.info("💡 등록된 표준 인보이스 양식 파일이 없습니다.")
+
